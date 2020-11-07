@@ -63,8 +63,8 @@ EOF
 " Bind the python functions to call them from command mode
 "---------------------------------------------------------
 
-" Bind python functions into a Vim command
-"
+" Bind python functions into Vim functions
+
 function! MdAddTask(...)
     let task_desc = ""
     if a:0 > 0
@@ -74,6 +74,14 @@ function! MdAddTask(...)
     unlet task_desc
 endfunction
 
+function! MdAddSubTask(...)
+    let task_desc = ""
+    if a:0 > 0
+        let task_desc = a:1
+    endif
+    python3 markdown_tool.add_sub_task()
+    unlet task_desc
+endfunction
 
 function! MdChangeToTask()
     python3 markdown_tool.change_status()
@@ -107,14 +115,43 @@ function! MdSetStatusCancel()
     unlet task_status
 endfunction
 
+function! MdAddTable(...)
+
+    echo a:000
+    let argus = a:000
+
+    python3 markdown_tool.add_table()
+
+endfunction
+
+function! MdAddCode(...)
+    let lang = ""
+    if a:0 > 0
+        let lang = a:1
+    endif
+    python3 markdown_tool.add_code()
+    unlet lang
+endfunction
+
 " Register the function as a command callable from command mode
+
 command! -nargs=? MdAddTask call MdAddTask(<q-args>)
+
+command! -nargs=? MdAddSubTask call MdAddSubTask(<q-args>)
+
 command! -nargs=0 MdChangeToTask call MdChangeToTask()
+
 command! -nargs=0 MdSetStatusNew call MdSetStatusNew()
+
 command! -nargs=0 MdSetStatusOngoing call MdSetStatusOngoing()
+
 command! -nargs=0 MdSetStatusDone call MdSetStatusDone()
+
 command! -nargs=0 MdSetStatusCancel call MdSetStatusCancel()
 
+command! -nargs=* MdAddTable call MdAddTable(<q-args>)
+
+command! -nargs=? MdAddCode call MdAddCode(<q-args>)
 
 " Restore compatible mode
 let &cpo = s:save_cpo
