@@ -21,23 +21,24 @@ Tested only with Neovim (v0.4.4 or newer)
 
 TODO:
 
-- add a task
-- indicate a task status (make them configurable)
-- add sub task
-- add a table
-- manipulate tables
-    - add a column into a table
-    - add a row into a table
-    - swap row
-    - swap column
-    - export to CSV
-- align a table (automatic)
-- insert a link (can insert the link if clipboard contains a valid one)
-- insert an image
-- insert html
-- insert code block
-- convert list to numbered list and inversely
-- increment/decrement a title. can decrement down to text (overload ctr-x/a?)
+- [X] add a task
+- [X] change a line into a task
+- [X] indicate a task status (make them configurable)
+- [ ] add sub task
+- [ ] add a table
+- [ ] manipulate tables
+    - [ ] add a column into a table
+    - [ ] add a row into a table
+    - [ ] swap row
+    - [ ] swap column
+    - [ ] export to CSV
+- [ ] align a table (automatic)
+- [ ] insert a link (can insert the link if clipboard contains a valid one)
+- [ ] insert an image
+- [ ] insert html
+- [ ] insert code block
+- [ ] convert list to numbered list and inversely
+- [ ] increment/decrement a title. can decrement down to text (overload ctr-x/a?)
 
 INBOX:
 
