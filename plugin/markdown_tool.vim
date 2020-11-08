@@ -41,6 +41,9 @@ if !has('g:mardownToolCancelStatus')
     let g:mardownToolCancelStatus = "C"
 endif
 
+if !has('g:mardownToolDebug')
+    let g:mardownToolDebug = 1
+endif
 "--------------------------------------------------------
 " Load here the python part of the plugin
 "--------------------------------------------------------
@@ -84,7 +87,7 @@ function! MdAddSubTask(...)
 endfunction
 
 function! MdChangeToTask()
-    python3 markdown_tool.change_status()
+    python3 markdown_tool.change_to_task()
 endfunction
 
 
@@ -96,7 +99,7 @@ endfunction
 
 
 function! MdSetStatusOngoing()
-    let task_status = g:MdSetStatusOngoing
+    let task_status = g:mardownToolOngoingStatus
     python3 markdown_tool.change_status()
     unlet task_status
 endfunction
@@ -116,12 +119,8 @@ function! MdSetStatusCancel()
 endfunction
 
 function! MdAddTable(...)
-
-    echo a:000
-    let argus = a:000
-
+    let description = a:000
     python3 markdown_tool.add_table()
-
 endfunction
 
 function! MdAddCode(...)

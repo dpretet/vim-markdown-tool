@@ -33,7 +33,7 @@ TODO:
     - [ ] swap row
     - [ ] swap column
     - [ ] export to CSV
-- [ ] align a table (automatic)
+- [ ] align a table (automatic when go back to normal mode)
 - [ ] insert a link (can insert the link if clipboard contains a valid one)
 - [ ] insert an image
 - [ ] insert html
@@ -42,6 +42,7 @@ TODO:
 
 INBOX:
 
+- support present or mdp
 - support text extension
 - support a personal portfolio to store notes, synced in git
 - export to HTML
