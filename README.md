@@ -32,17 +32,20 @@ TODO:
     - [ ] add a row into a table
     - [ ] swap row
     - [ ] swap column
-    - [ ] export to CSV
+- [ ] import/export table from/to CSV & TSV
 - [ ] align a table (automatic when go back to normal mode)
 - [ ] insert a link (can insert the link if clipboard contains a valid one)
 - [ ] insert an image
 - [ ] insert html
 - [ ] convert list to numbered list and inversely
 - [ ] increment/decrement a title. can decrement down to text (overload ctr-x/a?)
+- [ ] Create a testsuite with a vim script and diff the expected output across
+      a golden file
 
 INBOX:
 
-- support present or mdp
+- support [present](https://github.com/vinayak-mehta/present) or
+  [mdp](https://github.com/visit1985/mdp)
 - support text extension
 - support a personal portfolio to store notes, synced in git
 - export to HTML
@@ -54,12 +57,7 @@ INBOX:
     - task tracking: pomodoro like + reporting/review
 - wrap text
 - insert video
-
-
-TO EXPLOIT:
-
-- https://sourceforge.net/p/todo-agenda/discussion/markdown_syntax
-- https://orgmode.org/features.html
+- Take a look to the best Emacs orgmode plugins
 
 # License
 

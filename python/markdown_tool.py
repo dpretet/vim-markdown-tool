@@ -88,6 +88,7 @@ def add_sub_task():
     (row, _) = vim.current.window.cursor
     line = vim.current.buffer[row-1]
     # Check first the line is a task
+    # TODO: Change for a regex
     if """[""" not in line or """]""" not in line:
         logger("No brackets found. Assume it's not a task", WARNING)
         return
@@ -121,7 +122,8 @@ def change_to_task():
     line = vim.current.buffer[row]
 
     # Check first the line is not already a task
-    if """[""" in line and """[]""" in line:
+    # TODO: Change for a regex
+    if """[""" in line and """]""" in line:
         logger("Found brackets. Assume it's a task", DEBUG)
         return
 
@@ -157,7 +159,7 @@ def change_status():
     inbetween signifyiing the task status
     """
 
-    # Grab task status from vim script front end
+    # Grab task status from vim script front-end
     task_status = vim.eval("task_status")
     (row, _) = vim.current.window.cursor
     # To index from 0 to N, not from 1, avoid row-1 everywhere in the script
@@ -165,6 +167,7 @@ def change_status():
     line = vim.current.buffer[row]
 
     # Check first the line is a task, else return
+    # TODO: Change for a regex
     if """[""" not in line or """]""" not in line:
         logger("No brackets found. Assume it's not a task", WARNING)
         return
@@ -185,7 +188,7 @@ def add_code():
     Add a code block
     """
 
-    # Grab language from vim script front end
+    # Grab language from vim script front-end
     lang = vim.eval("lang")
 
     (row, _) = vim.current.window.cursor
@@ -198,7 +201,6 @@ def add_code():
     start_block = """```"""
     if lang:
         start_block += lang
-
     end_block = "```"
 
     # Append code block into the buffer
@@ -341,7 +343,7 @@ def table_prettifier(table, justify="left"):
             if len(table[i][j]) > column_width[i] and\
                     not table[i][j].isspace():
                 column_width[i] = len(table[i][j])
-        # If table is still only plnety of space, init width
+        # If table is only plenty of space, init width
         if column_width[i] == 0:
             column_width[i] = default_width
 
