@@ -10,12 +10,23 @@ A basic attempt to build a markdown plugin to assist writers and coders. No
 native mapping, just a set of function everybody can call or map within his
 own workflow.
 
-Derived from [platicboy/vim-markdown plugin](https://github.com/plasticboy/vim-markdown)
-for syntax hightlighting.
+This plugin doesn't provide syntax hightlighting for markdown. To enable the
+native one from Vim, drop the next line in your vimrc/init.vim:
 
-Require Python3 support
+```vim
+" Specify markdown syntax for these extensions and the flavor
+" (https://stackoverflow.com/a/30113820)
+au BufRead,BufNewFile *.mkd, *.md, *.txt set filetype=markdown.pandoc
+```
 
-Tested only with Neovim (v0.4.4 or newer)
+Many plugins provide syntax highlight for markdow (and more), follow a small list:
+- [GitHub Flavored Markdown Syntax](https://github.com/rhysd/vim-gfm-syntax)
+- [tpope/vim-markdown](https://github.com/tpope/vim-markdown)
+- [plasticboy/vim-markdown](https://github.com/plasticboy/vim-markdown)
+
+Please notice this plugin:
+- requires Python3 support
+- has been tested only with Neovim v0.4.x, but it should work with Vim
 
 # Task Tracker
 
@@ -26,7 +37,7 @@ TODO:
 - [X] indicate a task status (make them configurable)
 - [X] insert code block
 - [X] add sub task
-- [-] add a table
+- [X] add a table
 - [ ] manipulate tables
     - [ ] add a column into a table
     - [ ] add a row into a table
@@ -46,7 +57,6 @@ INBOX:
 
 - support [present](https://github.com/vinayak-mehta/present) or
   [mdp](https://github.com/visit1985/mdp)
-- support text extension
 - support a personal portfolio to store notes, synced in git
 - export to HTML
 - support floating window (for what?)

@@ -373,3 +373,51 @@ def table_prettifier(table, justify="left"):
             table_text.append(row_md)
 
     return table_text
+
+def table_prettify():
+
+    grab_table()
+    return
+
+
+def grab_table():
+    """
+    From the cursor position, parse the buffer to find the table to operate on.
+    Assume the user positioned the cursor into the table, so the function can
+    search for |
+
+    Returns:
+        1 if failed to find a table, else return a list of list of string.
+
+    """
+
+    # First check we are into a table. If not give up
+    (start, _) = vim.current.window.cursor
+    table_start = 0
+    table_end = 0
+
+    i = start
+    while i >= 0:
+        line = vim.current.buffer[i]
+        first = len(re.match(r"\s*", line, re.UNICODE).group(0))
+        print(first)
+        if line[first] != "|":
+            logger("Line doesn't start with |")
+            table_start = i
+            break
+        i -= 1
+
+    i = start
+    while i < len(vim.current.buffer)-1:
+        line = vim.current.buffer[i]
+        first = len(re.match(r"\s*", line, re.UNICODE).group(0))
+        if line[first] != "|":
+            logger("Line doesn't start with |")
+            table_start = i
+            break
+        i += 1
+
+        print("Line start: " + str(table_start))
+        print("Line end: " + str(table_end))
+
+    return

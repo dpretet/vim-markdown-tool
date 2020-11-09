@@ -132,6 +132,10 @@ function! MdAddCode(...)
     unlet lang
 endfunction
 
+function! MdTablePrettify()
+    python3 markdown_tool.table_prettify()
+endfunction
+
 " Register the function as a command callable from command mode
 
 command! -nargs=? MdAddTask call MdAddTask(<q-args>)
@@ -151,6 +155,8 @@ command! -nargs=0 MdSetStatusCancel call MdSetStatusCancel()
 command! -nargs=* MdAddTable call MdAddTable(<q-args>)
 
 command! -nargs=? MdAddCode call MdAddCode(<q-args>)
+
+command! -nargs=0 MdTablePrettify call MdTablePrettify()
 
 " Restore compatible mode
 let &cpo = s:save_cpo
