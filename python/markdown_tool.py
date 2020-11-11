@@ -363,7 +363,7 @@ def table_prettifier(table, justify="left"):
                 missing_ws = column_width[j] - len(table[j][i])
                 row_md += table[j][i] + (" " * missing_ws) + " | "
         # Add our brand new row
-        table_text.append(row_md)
+        table_text.append(row_md.strip())
         # If was parsing the columns' header, add a new line
         # (|----|----|) to separate the data
         if i == 0:
@@ -377,22 +377,44 @@ def table_prettifier(table, justify="left"):
     return table_text
 
 
-def table_prettify():
+def table_transformation(action=""):
 
-    (table_start, table_end) = grab_table()
-    content = grab_table_content(table_start, table_end)
+    (row, col) = vim.current.window.cursor
+    # Localize start and end of table
+    (table_start, table_end) = locate_table(row)
+    # Extract the content in a list of list of strings
+    # (col0[row0, row1, ...], col1[...], ...)
+    content = grab_table(table_start, table_end)
+
+    cursor_row, cursor_col = locate_cursor(row, col, table_start, table_end)
+
+    if action == "add_column":
+        add_column(content, cursor_col)
+
+    if action == "add_row":
+        add_row(content, cursor_row)
+
+    if action == "swap_column":
+        pass
+
+    if action == "swap_row":
+        pass
+
+    # Put in shape the table before insert it back
     prettified = table_prettifier(content)
 
+    # Delete last table version in the buffer
     i = table_end
     while i >= table_start:
         del vim.current.buffer[i]
         i = i - 1
 
+    # Then append the new table
     vim.current.buffer.append(prettified, table_start)
     return
 
 
-def grab_table():
+def locate_table(row):
     """
     From the cursor position, parse the buffer to find the table to operate on.
     Assume the user positioned the cursor into the table, so the function can
@@ -404,8 +426,7 @@ def grab_table():
     """
 
     # First check we are into a table. If not give up
-    (start, _) = vim.current.window.cursor
-    start -= 1
+    start = row - 1
     table_start = 0
     table_end = 0
 
@@ -450,7 +471,44 @@ def grab_table():
     return (table_start, table_end)
 
 
-def grab_table_content(table_start, table_end):
+def locate_cursor(row, col, table_start, table_end):
+    """
+    Determine from the table location and the cursor position
+    the cursor index inside table (in terms of column/row)
+    """
+
+    # Relative position of the cursor into the table
+    row_num = 0
+    col_num = 0
+
+    # Compute the height, and relative position into the table
+    nb_row = table_end - table_start - 1
+    cursor_row = table_end - row + 1
+
+    # If cursor is located in header or separator, consider it's
+    # ouside the table
+    if (row == table_start or row == table_start + 1):
+        row_num = -1
+    # Else compute position, relative to the header separator, indexed from 1
+    else:
+        row_num = nb_row - cursor_row
+
+    # To locate the cursor in the table's row, we count the number
+    # of separator. Any line can be used
+    line = vim.current.buffer[row-1]
+    nb_col = line.count("|")
+    col_num = nb_col - line[col+1:].count("|")
+
+    if col_num == nb_col:
+        col_num = nb_col - 1
+
+    logger(f"cursor row: {row_num}", DEBUG)
+    logger(f"cursor col: {col_num}", DEBUG)
+
+    return row_num, col_num
+
+
+def grab_table(table_start, table_end):
     """
     From the lines identified in the buffer,
     extract the the content.
@@ -469,7 +527,6 @@ def grab_table_content(table_start, table_end):
     content = []
 
     for line in vim.current.buffer[table_start:table_end+1]:
-        # print(line)
         line = line.split("|")
         clean = [i for i in line if i != '']
         is_sep = False
@@ -487,5 +544,48 @@ def grab_table_content(table_start, table_end):
             ext = extracted[j][i].strip()
             col.append(ext)
         content.append(col)
+
+    return content
+
+
+def add_column(content, col_index, col_info=[]):
+    """
+    From the position of the cursor add a column
+
+    Arguments:
+        - the table content, a list of list of strings:
+             - First dimension: the columns
+             - Second dimensions: the column's content
+        - cursor index for col
+        - optional information to append from command line
+    Returns:
+        - the table content, a list of list of strings:
+             - First dimension: the columns
+             - Second dimensions: the column's content
+    """
+
+    col_size = len(content[0])
+    content.insert(col_index, [""] * col_size)
+    return content
+
+
+def add_row(content, row_index, row_info=[]):
+    """
+    From the position of the cursor, add a row
+
+    Arguments:
+        - the table content, a list of list of strings:
+             - First dimension: the columns
+             - Second dimensions: the column's content
+        - cursor index for col
+        - cursor index for row
+    Returns:
+        - the table content, a list of list of strings:
+             - First dimension: the columns
+             - Second dimensions: the column's content
+    """
+
+    for i in range(len(content)):
+        content[i].insert(row_index+1, "")
 
     return content

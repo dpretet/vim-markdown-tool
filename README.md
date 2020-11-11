@@ -31,20 +31,20 @@ Please notice this plugin:
 # Task Tracker
 
 TODO:
-
+- [ ] test
 - [X] add a task
 - [X] change a line into a task
 - [X] indicate a task status (make them configurable)
 - [X] insert code block
 - [X] add sub task
 - [X] add a table
+- [X] Prettify a table
 - [ ] manipulate tables
-    - [ ] add a column into a table
+    - [-] add a column into a table
     - [ ] add a row into a table
     - [ ] swap row
     - [ ] swap column
 - [ ] import/export table from/to CSV & TSV
-- [ ] align a table (automatic when go back to normal mode)
 - [ ] insert a link (can insert the link if clipboard contains a valid one)
 - [ ] insert an image
 - [ ] insert html
@@ -55,6 +55,7 @@ TODO:
 
 INBOX:
 
+- [ ] Automatically prettify tables
 - support [present](https://github.com/vinayak-mehta/present) or
   [mdp](https://github.com/visit1985/mdp)
 - support a personal portfolio to store notes, synced in git

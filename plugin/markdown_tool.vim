@@ -133,7 +133,25 @@ function! MdAddCode(...)
 endfunction
 
 function! MdTablePrettify()
-    python3 markdown_tool.table_prettify()
+    python3 markdown_tool.table_transformation()
+endfunction
+
+function! MdTableAddColumn()
+    let description = a:000
+    python3 markdown_tool.table_transformation('add_column')
+endfunction
+
+function! MdTableAddRow()
+    let description = a:000
+    python3 markdown_tool.table_transformation('add_row')
+endfunction
+
+function! MdTableSwapColumn()
+    python3 markdown_tool.table_transformation('swap_column')
+endfunction
+
+function! MdTableSwapRow()
+    python3 markdown_tool.table_transformation('swap_row')
 endfunction
 
 " Register the function as a command callable from command mode
@@ -157,6 +175,14 @@ command! -nargs=* MdAddTable call MdAddTable(<q-args>)
 command! -nargs=? MdAddCode call MdAddCode(<q-args>)
 
 command! -nargs=0 MdTablePrettify call MdTablePrettify()
+
+command! -nargs=* MdTableAddColumn call MdTableAddColumn()
+
+command! -nargs=* MdTableAddRow call MdTableAddRow()
+
+command! -nargs=0 MdTableSwapColumn call MdTableSwapColumn()
+
+command! -nargs=0 MdTableSwapRow call MdTableSwapRow()
 
 " Restore compatible mode
 let &cpo = s:save_cpo
