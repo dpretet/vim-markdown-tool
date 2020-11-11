@@ -254,7 +254,9 @@ def table_clean_args(desc):
     """
 
     # Handle as well comma and space to separate descriptions
-    if "," in desc[0]:
+    if '' in desc[0]:
+        desc = ''
+    elif "," in desc[0]:
         desc = desc[0].split(",")
     else:
         desc = desc[0].split(" ")
@@ -342,7 +344,7 @@ def table_prettifier(table, justify="left"):
         for j in range(len(table[0])):
             if len(table[i][j]) > column_width[i] and\
                     not table[i][j].isspace():
-                column_width[i] = len(table[i][j])
+                column_width[i] = len(table[i][j].strip())
         # If table is only plenty of space, init width
         if column_width[i] == 0:
             column_width[i] = default_width
@@ -359,7 +361,7 @@ def table_prettifier(table, justify="left"):
             # for alignment
             else:
                 missing_ws = column_width[j] - len(table[j][i])
-                row_md += table[j][i] + (" " * (missing_ws-1)) + " | "
+                row_md += table[j][i] + (" " * missing_ws) + " | "
         # Add our brand new row
         table_text.append(row_md)
         # If was parsing the columns' header, add a new line
@@ -374,9 +376,19 @@ def table_prettifier(table, justify="left"):
 
     return table_text
 
+
 def table_prettify():
 
-    grab_table()
+    (table_start, table_end) = grab_table()
+    content = grab_table_content(table_start, table_end)
+    prettified = table_prettifier(content)
+
+    i = table_end
+    while i >= table_start:
+        del vim.current.buffer[i]
+        i = i - 1
+
+    vim.current.buffer.append(prettified, table_start)
     return
 
 
@@ -393,31 +405,87 @@ def grab_table():
 
     # First check we are into a table. If not give up
     (start, _) = vim.current.window.cursor
+    start -= 1
     table_start = 0
     table_end = 0
 
+    logger("Search table start", DEBUG)
     i = start
     while i >= 0:
+        # Search for the table limits
         line = vim.current.buffer[i]
         first = len(re.match(r"\s*", line, re.UNICODE).group(0))
-        print(first)
-        if line[first] != "|":
+        # Case we are out of the table
+        if not line or line[first] != "|":
             logger("Line doesn't start with |")
-            table_start = i
+            table_start = i+1
+            break
+        # Case we reached out the file's start
+        if i == 0:
+            table_start = 0
             break
         i -= 1
 
+    logger("Search table end", DEBUG)
     i = start
-    while i < len(vim.current.buffer)-1:
+    while i < len(vim.current.buffer):
+        # Search for the table limits
         line = vim.current.buffer[i]
         first = len(re.match(r"\s*", line, re.UNICODE).group(0))
-        if line[first] != "|":
+        # Case we are out of the table
+        if not line or line[first] != "|":
             logger("Line doesn't start with |")
-            table_start = i
+            table_end = i-1
+            break
+        # Case we reached out the file's end
+        if i == len(vim.current.buffer)-1:
+            logger("Reached end of buffer")
+            table_end = i
             break
         i += 1
 
-        print("Line start: " + str(table_start))
-        print("Line end: " + str(table_end))
+    logger("Line start: " + str(table_start))
+    logger("Line end: " + str(table_end))
 
-    return
+    return (table_start, table_end)
+
+
+def grab_table_content(table_start, table_end):
+    """
+    From the lines identified in the buffer,
+    extract the the content.
+
+    Arguments:
+        - start: first line of the table
+        - end: last line of the table
+
+    Returns:
+        a list of list of strings:
+            - First dimension: the columns
+            - Second dimensions: the column's content
+    """
+
+    extracted = []
+    content = []
+
+    for line in vim.current.buffer[table_start:table_end+1]:
+        # print(line)
+        line = line.split("|")
+        clean = [i for i in line if i != '']
+        is_sep = False
+        for col in clean:
+            if "---" in col:
+                is_sep = True
+        if not is_sep:
+            extracted.append(clean)
+
+    # Now organize the array to describe content
+    # column by column
+    for i in range(len(extracted[0])):
+        col = []
+        for j in range(len(extracted)):
+            ext = extracted[j][i].strip()
+            col.append(ext)
+        content.append(col)
+
+    return content
