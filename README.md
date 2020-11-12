@@ -40,10 +40,11 @@ TODO:
 - [X] add a table
 - [X] Prettify a table
 - [ ] manipulate tables
-    - [-] add a column into a table
-    - [ ] add a row into a table
-    - [ ] swap row
-    - [ ] swap column
+    - [X] add a column into a table
+    - [X] add a row into a table
+    - [X] swap column
+    - [X] swap row
+- [ ] Restore cursor
 - [ ] import/export table from/to CSV & TSV
 - [ ] insert a link (can insert the link if clipboard contains a valid one)
 - [ ] insert an image
