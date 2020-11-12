@@ -30,32 +30,34 @@ Please notice this plugin:
 
 # Task Tracker
 
-TODO:
-- [ ] test
+AVAILABLE:
+
 - [X] add a task
 - [X] change a line into a task
 - [X] indicate a task status (make them configurable)
 - [X] insert code block
 - [X] add sub task
 - [X] add a table
-- [X] Prettify a table
-- [ ] manipulate tables
-    - [-] add a column into a table
-    - [ ] add a row into a table
-    - [ ] swap row
-    - [ ] swap column
-- [ ] import/export table from/to CSV & TSV
+- [X] prettify a table
+- [X] manipulate tables
+    - [X] add a column into a table
+    - [X] add a row into a table
+    - [X] swap column
+    - [X] swap row
+
+TODO:
+
+- [ ] restore cursor properly
 - [ ] insert a link (can insert the link if clipboard contains a valid one)
 - [ ] insert an image
-- [ ] insert html
 - [ ] convert list to numbered list and inversely
-- [ ] increment/decrement a title. can decrement down to text (overload ctr-x/a?)
-- [ ] Create a testsuite with a vim script and diff the expected output across
-      a golden file
+- [ ] import/export table from/to CSV & TSV
+- [ ] create a testsuite with bash and some vim scripts and diff the expected
+      output across a golden file
 
 INBOX:
 
-- [ ] Automatically prettify tables
+- automatically prettify tables
 - support [present](https://github.com/vinayak-mehta/present) or
   [mdp](https://github.com/visit1985/mdp)
 - support a personal portfolio to store notes, synced in git
@@ -68,7 +70,7 @@ INBOX:
     - task tracking: pomodoro like + reporting/review
 - wrap text
 - insert video
-- Take a look to the best Emacs orgmode plugins
+- take a look to the best Emacs orgmode plugins
 
 # License
 

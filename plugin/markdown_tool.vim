@@ -91,28 +91,28 @@ function! MdChangeToTask()
 endfunction
 
 
-function! MdSetStatusNew()
+function! MdStatusNew()
     let task_status = g:mardownToolNewStatus
     python3 markdown_tool.change_status()
     unlet task_status
 endfunction
 
 
-function! MdSetStatusOngoing()
+function! MdStatusOngoing()
     let task_status = g:mardownToolOngoingStatus
     python3 markdown_tool.change_status()
     unlet task_status
 endfunction
 
 
-function! MdSetStatusDone()
+function! MdStatusDone()
     let task_status = g:mardownToolDoneStatus
     python3 markdown_tool.change_status()
     unlet task_status
 endfunction
 
 
-function! MdSetStatusCancel()
+function! MdStatusCancel()
     let task_status = g:mardownToolCancelStatus
     python3 markdown_tool.change_status()
     unlet task_status
@@ -132,25 +132,25 @@ function! MdAddCode(...)
     unlet lang
 endfunction
 
-function! MdTablePrettify()
+function! MdPrettify()
     python3 markdown_tool.table_transformation()
 endfunction
 
-function! MdTableAddColumn()
+function! MdAddColumn()
     let description = a:000
     python3 markdown_tool.table_transformation('add_column')
 endfunction
 
-function! MdTableAddRow()
+function! MdAddRow()
     let description = a:000
     python3 markdown_tool.table_transformation('add_row')
 endfunction
 
-function! MdTableSwapColumn()
+function! MdSwapColumn()
     python3 markdown_tool.table_transformation('swap_column')
 endfunction
 
-function! MdTableSwapRow()
+function! MdSwapRow()
     python3 markdown_tool.table_transformation('swap_row')
 endfunction
 
@@ -162,27 +162,27 @@ command! -nargs=? MdAddSubTask call MdAddSubTask(<q-args>)
 
 command! -nargs=0 MdChangeToTask call MdChangeToTask()
 
-command! -nargs=0 MdSetStatusNew call MdSetStatusNew()
+command! -nargs=0 MdStatusNew call MdStatusNew()
 
-command! -nargs=0 MdSetStatusOngoing call MdSetStatusOngoing()
+command! -nargs=0 MdStatusOngoing call MdStatusOngoing()
 
-command! -nargs=0 MdSetStatusDone call MdSetStatusDone()
+command! -nargs=0 MdStatusDone call MdStatusDone()
 
-command! -nargs=0 MdSetStatusCancel call MdSetStatusCancel()
+command! -nargs=0 MdStatusCancel call MdStatusCancel()
 
 command! -nargs=* MdAddTable call MdAddTable(<q-args>)
 
 command! -nargs=? MdAddCode call MdAddCode(<q-args>)
 
-command! -nargs=0 MdTablePrettify call MdTablePrettify()
+command! -nargs=0 MdPrettify call MdPrettify()
 
-command! -nargs=* MdTableAddColumn call MdTableAddColumn()
+command! -nargs=* MdAddColumn call MdAddColumn()
 
-command! -nargs=* MdTableAddRow call MdTableAddRow()
+command! -nargs=* MdAddRow call MdAddRow()
 
-command! -nargs=0 MdTableSwapColumn call MdTableSwapColumn()
+command! -nargs=0 MdSwapColumn call MdSwapColumn()
 
-command! -nargs=0 MdTableSwapRow call MdTableSwapRow()
+command! -nargs=0 MdSwapRow call MdSwapRow()
 
 " Restore compatible mode
 let &cpo = s:save_cpo

@@ -395,10 +395,10 @@ def table_transformation(action=""):
         add_row(content, cursor_row)
 
     if action == "swap_column":
-        pass
+        swap_column(content, cursor_col)
 
     if action == "swap_row":
-        pass
+        swap_row(content, cursor_row)
 
     # Put in shape the table before insert it back
     prettified = table_prettifier(content)
@@ -587,5 +587,62 @@ def add_row(content, row_index, row_info=[]):
 
     for i in range(len(content)):
         content[i].insert(row_index+1, "")
+
+    return content
+
+
+def swap_column(content, col_index, col_info=[]):
+    """
+    Swap column position into the table
+
+    Arguments:
+        - the table content, a list of list of strings:
+             - First dimension: the columns
+             - Second dimensions: the column's content
+        - cursor index for col
+        - optional information to append from command line
+    Returns:
+        - the table content, a list of list of strings:
+             - First dimension: the columns
+             - Second dimensions: the column's content
+    """
+
+    nb_col = len(content)
+
+    if col_index == nb_col:
+        to_swap = col_index - 2
+    else:
+        to_swap = col_index
+
+    col_saved = content[to_swap]
+    del content[to_swap]
+    content.insert(col_index - 1, col_saved)
+
+    return content
+
+
+def swap_row(content, row_index, row_info=[]):
+    """
+    Swap row position into the table
+
+    Arguments:
+        - the table content, a list of list of strings:
+             - First dimension: the columns
+             - Second dimensions: the column's content
+        - cursor index for col
+        - cursor index for row
+    Returns:
+        - the table content, a list of list of strings:
+             - First dimension: the columns
+             - Second dimensions: the column's content
+    """
+
+    for i in range(len(content)):
+        row_saved = content[i][row_index]
+        del content[i][row_index]
+        if row_index == len(content[i]):
+            content[i].insert(row_index-1, row_saved)
+        else:
+            content[i].insert(row_index+1, row_saved)
 
     return content
