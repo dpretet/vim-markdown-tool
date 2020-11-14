@@ -121,6 +121,7 @@ endfunction
 function! MdAddTable(...)
     let description = a:000
     python3 markdown_tool.add_table()
+    let description = a:000
 endfunction
 
 function! MdAddCode(...)
@@ -139,6 +140,7 @@ endfunction
 function! MdAddColumn()
     let description = a:000
     python3 markdown_tool.table_transformation('add_column')
+    unlet description
 endfunction
 
 function! MdAddRow()
@@ -154,6 +156,19 @@ function! MdSwapRow()
     python3 markdown_tool.table_transformation('swap_row')
 endfunction
 
+function! MdAddLink(...)
+    let link = a:000
+    let clip = @+
+    python3 markdown_tool.add_link()
+    unlet link
+    unlet clip
+endfunction
+
+function! MdAddImage(...)
+    let link = a:000
+    python3 markdown_tool.add_image()
+    unlet link
+endfunction
 " Register the function as a command callable from command mode
 
 command! -nargs=? MdAddTask call MdAddTask(<q-args>)
@@ -183,6 +198,10 @@ command! -nargs=* MdAddRow call MdAddRow()
 command! -nargs=0 MdSwapColumn call MdSwapColumn()
 
 command! -nargs=0 MdSwapRow call MdSwapRow()
+
+command! -nargs=* MdAddLink call MdAddLink(<q-args>)
+
+command! -nargs=* MdAddImage call MdAddImage(<q-args>)
 
 " Restore compatible mode
 let &cpo = s:save_cpo

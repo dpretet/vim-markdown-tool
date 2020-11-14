@@ -646,3 +646,83 @@ def swap_row(content, row_index, row_info=[]):
             content[i].insert(row_index+1, row_saved)
 
     return content
+
+
+def add_link():
+    """
+    Create a link. Can be empty, defined from command line
+    or pasted from clipboard
+    """
+    # Link provided from command
+    link = vim.eval("link")
+    # Link possibly present in clipboard
+    clip = vim.eval("clip")
+
+    to_add = ""
+    # Use input if present, whatever it is
+    if link[0]:
+        to_add = link[0]
+    # Else use clipboard but check it's a link, not dirty text
+    elif clip and is_web_link(clip):
+        to_add = clip
+    # Append the link at current cursor position
+    (row, col) = vim.current.window.cursor
+    vim.current.buffer[row-1] += f"[]({to_add})"
+    # Restore cursor and move to bracket
+    vim.current.window.cursor = (row, col)
+    vim.command("normal! F[")
+
+    return
+
+
+def is_web_link(link):
+    """
+    Check a link is a web address by checking existence of
+    http, https, www into the string
+
+    Arguments:
+        - link: a string describing the link
+
+    Returns:
+        - 1 if is a web address otherwise 0
+    """
+
+    is_web = 0
+    keywords = ["http", "www.", "://", "git@git"]
+
+    for keyword in keywords:
+        if keyword in link:
+            is_web = 1
+
+    return is_web
+
+
+def add_image():
+    """
+    Add an image link, with HTML style for better configuration
+    """
+
+    # Link provided from command
+    link = vim.eval("link")
+    # Use input if present, whatever it is
+    to_add = ""
+    if link[0]:
+        to_add = link[0]
+
+    anchor = f"""
+<p align="center">
+  <!--img width="100" height="100" src="{to_add}"-->
+  <img src="{to_add}">
+</p>"""
+
+    # Append the link at current cursor position
+    (row, col) = vim.current.window.cursor
+
+    # If line is empty, append into it, else append to the next one
+    if not vim.current.buffer[row-1]:
+        vim.current.buffer.append(anchor.split("\n"), row-1)
+    else:
+        vim.current.buffer.append(anchor.split("\n"), row)
+    # Restore cursor and move to bracket
+    vim.current.window.cursor = (row, col)
+    vim.command("normal! F[")

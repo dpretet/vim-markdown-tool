@@ -40,18 +40,18 @@ AVAILABLE:
 - [X] add a table
 - [X] prettify a table
 - [X] manipulate tables
-    - [X] add a column into a table
-    - [X] add a row into a table
+    - [X] add a column
+    - [X] add a row
     - [X] swap column
     - [X] swap row
+- [X] insert a link (can insert the link if clipboard contains a valid one)
+- [X] insert an image
+- [ ] import/export table from/to CSV & TSV
 
 TODO:
 
-- [ ] restore cursor properly
-- [ ] insert a link (can insert the link if clipboard contains a valid one)
-- [ ] insert an image
+- [ ] Support range when possible
 - [ ] convert list to numbered list and inversely
-- [ ] import/export table from/to CSV & TSV
 - [ ] create a testsuite with bash and some vim scripts and diff the expected
       output across a golden file
 
