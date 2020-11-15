@@ -46,31 +46,19 @@ AVAILABLE:
     - [X] swap row
 - [X] insert a link (can insert the link if clipboard contains a valid one)
 - [X] insert an image
-- [ ] import/export table from/to CSV & TSV
 
 TODO:
 
+- [ ] import/export table from/to CSV & TSV
 - [ ] Support range when possible
 - [ ] convert list to numbered list and inversely
+- [ ] insert a table of content, linking titles
+- [ ] function to prettify all tables in the document
 - [ ] create a testsuite with bash and some vim scripts and diff the expected
       output across a golden file
-
-INBOX:
-
-- automatically prettify tables
-- support [present](https://github.com/vinayak-mehta/present) or
-  [mdp](https://github.com/visit1985/mdp)
-- support a personal portfolio to store notes, synced in git
-- export to HTML
-- support floating window (for what?)
-- can check links (image, file, chapters, web links)
-- insert a table of content based on titles (can be automatically updated)
-- create an agenda
-    - indicate a due date to a task
-    - task tracking: pomodoro like + reporting/review
-- wrap text
-- insert video
-- take a look to the best Emacs orgmode plugins
+- [ ] links checker (image, file, chapters, web links)
+- [ ] insert video
+- [ ] take a look to the best Emacs orgmode plugins
 
 # License
 
