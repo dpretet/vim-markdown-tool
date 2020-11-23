@@ -438,7 +438,7 @@ def locate_table(row):
         first = len(re.match(r"\s*", line, re.UNICODE).group(0))
         # Case we are out of the table
         if not line or line[first] != "|":
-            logger("Line doesn't start with |")
+            logger("Line doesn't start with |", DEBUG)
             table_start = i+1
             break
         # Case we reached out the file's start
@@ -455,18 +455,18 @@ def locate_table(row):
         first = len(re.match(r"\s*", line, re.UNICODE).group(0))
         # Case we are out of the table
         if not line or line[first] != "|":
-            logger("Line doesn't start with |")
+            logger("Line doesn't start with |", DEBUG)
             table_end = i-1
             break
         # Case we reached out the file's end
         if i == len(vim.current.buffer)-1:
-            logger("Reached end of buffer")
+            logger("Reached end of buffer", DEBUG)
             table_end = i
             break
         i += 1
 
-    logger("Line start: " + str(table_start))
-    logger("Line end: " + str(table_end))
+    logger("Line start: " + str(table_start), DEBUG)
+    logger("Line end: " + str(table_end), DEBUG)
 
     return (table_start, table_end)
 

@@ -42,7 +42,7 @@ if !has('g:mardownToolCancelStatus')
 endif
 
 if !has('g:mardownToolDebug')
-    let g:mardownToolDebug = 1
+    let g:mardownToolDebug = 0
 endif
 "--------------------------------------------------------
 " Load here the python part of the plugin
@@ -169,6 +169,11 @@ function! MdAddImage(...)
     python3 markdown_tool.add_image()
     unlet link
 endfunction
+
+function! MdToHtml()
+    " TODO: %!markdown + simple CSS
+endfunction
+
 " Register the function as a command callable from command mode
 
 command! -nargs=? MdAddTask call MdAddTask(<q-args>)
@@ -202,6 +207,8 @@ command! -nargs=0 MdSwapRow call MdSwapRow()
 command! -nargs=* MdAddLink call MdAddLink(<q-args>)
 
 command! -nargs=* MdAddImage call MdAddImage(<q-args>)
+
+command! -nargs=0 MdToHtml call MdToHtml()
 
 " Restore compatible mode
 let &cpo = s:save_cpo
